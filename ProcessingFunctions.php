@@ -15,6 +15,9 @@ class Processing
 	//         file_put_contents('radio_access.log', $error, FILE_APPEND);
 	// }+
 
+public function construct(){
+
+}
 	//function to connect to the db //How to prevent creating new database instance each time
 	public function ConnectDB() // call without passing the parameters
 	{
@@ -23,7 +26,7 @@ class Processing
 		$pass = "";
 		$db = "coffers";
 
-		$conn = new mysqli($host, $user, $pass, $db)
+		$conn = new mysqli($host, $user, $pass, $db);
 
 		if (mysqli_connect_errno()){
 			die ("Connection failed" + mysqli_connect_error());
@@ -36,10 +39,10 @@ class Processing
 	//function to register the application - Im considering using prepared statements would it work?
 	public function Register($first, $last, $gender, $dob, $email, $pass)
 	{
-		$conn = ConnectDB();
+		$conn = $this->ConnectDB();
 
-		$stmt = $conn-> prepare("INSERT INTO users (firstname, lastname, gender, dob, email, password) VALUES (?, ?, ?, ?, ?, ?)");
-		$stmt-> bind_param ("sssisi", $firstname, $lastname, $gender, $dob, $email, $password);
+		$stmt = $conn->prepare("INSERT INTO users (FName, LName, Gender, Dob, Email, Password) VALUES (?, ?, ?, ?, ?, ?)");
+		$stmt-> bind_param ("ssssss", $firstname, $lastname, $gender, $dob, $email, $password);
 
 		//set parameters and execute
 		$firstname = "$first";
@@ -51,13 +54,13 @@ class Processing
 
 		$stmt-> execute();
 
-		if ($stmt-> error()){
-			return "Registration failed. Try again";
-			//write error in log
-		}
-		else (
-			return "Registration successful";
-		)
+		// if ($stmt-> error()){
+		// 	return "Registration failed. Try again";
+		// 	//write error in log
+		// }
+		// else (
+		// 	return "Registration successful";
+		// )
 		
 		$stmt-> close();
 		$conn->close();
@@ -75,15 +78,16 @@ class Processing
 	}
 
 	//function to logIn the user
-	public function LogIn($conn, $email, $password)
+	public function LogIn($email, $password)
 	{
-		$sql = "SELECT * FROM users WHERE email = " .$email;
+		$conn = $this->ConnectDB();
+		$sql = "SELECT * FROM users WHERE Email = '$email'";
 
-		$result = $con-> query($sql);
-		$user_row = $result-> fetch_array(); 
+		$result = $conn->query($sql);
+		$user_row = $result->fetch_array(MYSQLI_ASSOC); 
 
-		if ($password == $user_row['password']) {
-			return "Welcome" + $user_row['firstname'];
+		if ($password == $user_row['Password']) {
+			return "Welcome" . $user_row['FName'];
 		} 
 		else {
 		return "Incorrect Login details. Try again!";
@@ -93,4 +97,10 @@ class Processing
 		$conn->close();
 	}
 }
-?>
+
+$obj = new Processing();
+
+var_dump($obj->Register("First", "Last", "Male", "208-02-12", "email@me.com", "pass"));
+
+var_dump($obj->LogIn("email@me.com", "pass"));
+	?>
