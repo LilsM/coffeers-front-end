@@ -216,13 +216,63 @@
 				 <button class="button" type="button" name="orderButton" id="orderButton">Order</button>
 				</form>
 			</div><!-- /content -->
-
 			<div data-role="footer">
-		
 				<h4>&copy; Second Cup Coffee Company. Accra, Ghana, 2019</h4>
 			</div><!-- /footer -->
 		</div>
 		
+		<!--Order Type -->
+		<div data-role="page" id="ordertype-page" data-theme="">
+			<div data-role="header">
+				<h1>Order Type</h1>
+			</div><!-- /header -->
+
+			<div role="main" class="ui-content">
+				<center><h3>How do you want to have your order?</h3></center>
+				<form>
+					<button id="away">Take Away</button>
+					<button id="open">Join an Open table</button>
+					<button id="reserve">Reserve an unoccupied table</button>
+				</form>
+			</div><!-- /content -->
+			<div data-role="footer">
+				<h4>&copy; Second Cup Coffee Company. Accra, Ghana, 2019</h4>
+			</div><!-- /footer -->
+		</div>
+		
+		<!--Join an Open table-->
+		<div data-role="page" id="jointable-page" data-theme="">
+			<div data-role="header">
+				<h1>Join an Open table</h1>
+			</div><!-- /header -->
+
+			<div role="main" class="ui-content">
+				<center><h3>Below is a list of tables. Choose an open table to join it.</h3></center>
+				<form>
+					
+				</form>
+			</div><!-- /content -->
+			<div data-role="footer">
+				<h4>&copy; Second Cup Coffee Company. Accra, Ghana, 2019</h4>
+			</div><!-- /footer -->
+		</div>
+		
+		<!--Reserve a table-->
+		<div data-role="page" id="reservetable-page" data-theme="">
+			<div data-role="header">
+				<h1>Book an Empty table</h1>
+			</div><!-- /header -->
+
+			<div role="main" class="ui-content">
+				<center><h3>Below is a list of available tables. Choose a table to reserve it.</h3></center>
+				<form>
+					
+				</form>
+			</div><!-- /content -->
+			<div data-role="footer">
+				<h4>&copy; Second Cup Coffee Company. Accra, Ghana, 2019</h4>
+			</div><!-- /footer -->
+		</div>
 
  
         
@@ -264,7 +314,7 @@
 		
 		$("#rstatus").text("Creating New Account...");
 		var dataString="&firstname="+firstname+"&lastname="+lastname+"&gender="+gender+"&email="+email+"&password="+password+"&register=";
-		$.ajax({
+		$.ajax({c
 			type: "POST",crossDomain: true, cache: false,
 			url: "http://127.0.0.1/cofferesbackend/Process.php",
 			data: dataString,
@@ -279,6 +329,22 @@
 		});
 		});
 		</script>
+		
+		<!-- Type of order page -->
+		<script>
+			$("#away").click(function(){
+				alert("Thank you for using coffeers application.Enjoy!!")
+			});
+			
+			$("#open").click(function(){
+				open("#jointable-page")
+			});
+			
+			$("#reserve").click(function(){
+				open("#reservetable-page")
+			});
+		</script>
+		
 		<!--script type="text/javascript" src="cordova.js"></script-->
 	</body>
 
