@@ -24,29 +24,28 @@
 		
     </head>
 
-    <body  style="background-image:url(dave-michuda-54058-unsplash.jpg);
-	height: 100%;
-	background-size:cover;
+    <body  style="background-image:url(kahawa.jpeg);
+	background-size:100% 170%;
 	background-repeat:no-repeat;
 	color:white;">
     	
 		<!-- Login Page -->
-	   	<div data-role="page" id="login-page" data-theme="b">
+	   	<div data-role="page" id="login-page" data-theme="">
 
-			<div data-role="header">
-				<a href="#Registration-page" data-icon="user">Click to Register</a>
-				<a href="#profile-page" data-icon="user">Your Profile</a>
+			<div data-role="header" >
+				<a href="#Registration-page" data-icon="user" style="background-color:white;">Click to Register</a>
+				<a href="#profile-page" data-icon="user" style="background-color:white;">Your Profile</a>
 				<h1>Login Page</h1>
 			</div><!-- /header -->
 
-			<div role="main" class="ui-content">
+			<div role="main" class="ui-content" >
 				<p id="status"></p>
-				<form action="processlogin.php" method="post">
+				<form  method="post" id="loginform">
 					Email:<br>
-					<input type="email" name="lmail" id="lmail" required="yes"><br>
+					<input type="email" name="lmail" id="lmail" required="yes" >
 					Password:<br>
 					<input type="Password" name="password" id="password" required="yes"><br>
-					<button type="button" id="loginButton"> submit</button>
+					<button> <input type="hidden" name="loginButton" id="loginButton" style="background-color:white;"> submit</button>
 				</form>
 			</div><!-- /content -->
 
@@ -58,39 +57,37 @@
 
 
 	<!--This is my Registration page-->
-	<div data-role="page" id="Registration-page" data-theme="b">
+	<div data-role="page" id="Registration-page" data-theme="">
 	<div data-role="header">
-	<a href="#login-page" data-icon="back">Back to login</a>
+	<a href="#login-page" data-icon="back" style="background-color:white;">Back to login</a>
 		<h1>Registration Page</h1>
 
 	</div>
 
 	<div role="main" class="ui-content">
 		<p id="rstatus"></p>
-		<form id="Registrationform">
+		<form id="Registrationform" method="POST">
 			<fieldset>
 				<!--legend>Personal information:</legend-->
 				 First name:<br>
-				 <input type="text" name="firstname" id="firstname" required="yes"><br>
+				 <input type="text" name="firstname" id="firstname"><br>
 				 Last name:<br>
-				 <input type="text" name="lastname" id="lastname" required="yes"><br>
+				 <input type="text" name="lastname" id="lastname"><br>
 				 Gender: <br>
-				 <select name="gender" id="gender" required="yes">
+				 <select name="gender" id="gender">
 				 	<option value="Male">Male</option>
 				 	<option value="Female">Female</option>
-				 	<option value="Other">Other</option>
+				 	<option value="Other">Non-binary</option>
 				 </select> <br>
 				 Date of Birth: <br>
-				 <input type="date" name="dob" id="dob" required="yes"><br>
-				 Phone number: <br>
-				 <input type="phone number" name="phonenumber" id="" required="no"><br>
+				 <input type="date" name="dob" id="dob"><br>
 				 Email: <br>
-				 <input type="email" name="email" id="email" required="yes"><br>
+				 <input type="email" name="email" id="email"><br>
 				 Password:<br>
-				 <input type="Password" name="passwd" id="passwd" required="yes"><br>
+				 <input type="Password" name="password" id="password"><br>
 				 Confirm Password:<br>
-				 <input type="Password" name="cpasswd" id="cpasswd" required="yes"><br>
-				 <button type="button" name="registerButton" id="registerButton"> submit</button>
+				 <input type="Password" name="cpassword" id="cpassword"><br>
+				 <button> <input  type="hidden" name="registerButton" id="registerButton" style="background-color:white;" > submit</button>
 				</fieldset>
 			</form>
 		</div><!-- /content-->
@@ -104,7 +101,7 @@
 			
 			
 		<!-- profile page -->
-		<div data-role="page" id="profile-page" data-theme="b">
+		<div data-role="page" id="profile-page" data-theme="">
 
 			<div data-role="header">
 				<a href="#Registration-page" data-icon="user">Click to Register</a>
@@ -281,20 +278,21 @@
 		
     <!-- for login page -->
 	<script>
-	$("#loginButton").click(function(){
+	$("#loginform").submit(function(e){
+			e.preventDefault();
 			var email= $.trim($("#lmail").val());
 			var password= $.trim($("#password").val());
 			$("#status").text("Authenticating...");
-			var loginString ="email="+email+"&password="+password+"&login=";
+			//var loginString ="email="+email+"&password="+password+"&login=";
 			$.ajax({
 				type: "POST",crossDomain: true, cache: false,
-				url: "https://romanian-gasket.000webhostapp.com/Process.php",
-				data: loginString,
+				url: "https://romanian-gasket.000webhostapp.com/ProcessingFunctions.php",
+				data: {email:'email', password:'password'},
 				success: function(data){
 					if(data == "success") {
 						$("#status").text("Login Success..!");
 						localStorage.loginstatus = "true";
-						window.location.href = "welcome.html";
+						self.location.href = '#menu-page';
 					}
 					else if(data == "error")
 					{
@@ -307,32 +305,44 @@
 	
 	<!-- for registration page-->
 	<script>
-		$("#registerButton").click(function(){
-		alert("welkom")
-		var firstname = $.trim($('#firstname').val());
-		var lastname = $.trim($('#lastname').val());
-		var gender = $.trim($('#gender').val());
-		var dob = $.trim($('#gender').val());
-		var phonenumber = $.trim($('#phonenumber').val());
-		var email = $.trim($('#email').val());
-		var password = $.trim($('#passwd').val());
+		$("#Registrationform").submit(function(){
+		//alert("welkom")
+			new formdata = formdata(this);
+			/**var firstname = $.trim($('#firstname').val());
+			var lastname = $.trim($('#lastname').val());
+			var gender = $.trim($('#gender').val());
+			var dob = $.trim($('#gender').val());
+			var email = $.trim($('#email').val());
+			var password = $.trim($('#password').val());
+			var cpassword = $.trim($('#cpassword').val()); 
 		
-		$("#rstatus").text("Creating New Account...");
-		//var dataString="&firstname=":firstname+"&lastname="+lastname+"&gender="+gender+"&email="+email+"&password="+password+"&register=";
-		$.ajax({
-			type: "POST",crossDomain: true, cache: false,
-			url: "https://romanian-gasket.000webhostapp.com/Process.php",
-			type: "POST",
-			data: {firstname:"firstname",lastname:"lastname",gender:"gender",dob:"dob",phonenumber:"phonenumber",email:"email",password:"password"},
-			success: function(data){
-				if(data == "success")
-					$("#rstatus").text("Registered success");
-				else if( data == "exist")
-					$("#rstatus").text("Account is already there");
-				else if(data == "error")
-					$("#rstatus").text("Register Failed");
-			}
-		});
+			//$("#rstatus").text("Creating New Account...");**/
+		
+			//var dataString="&firstname=":firstname+"&lastname="+lastname+"&gender="+gender+"&email="+email+"&password="+password+"&register=";
+			alert(password);
+			if (password == cpassword){
+				$.ajax({
+					//type: "POST",crossDomain: true, cache: false,
+					url: 'https://romanian-gasket.000webhostapp.com/ProcessingFunctions.php',
+					type: 'POST',
+					data: formdata, //{firstname:firstname, lastname:lastname, gender:gender, dob:dob, email:email, password:password},
+					//alert('firstname');
+					cache = false,
+					success: function(data){
+						alert(data);
+						//if(data == "Registration successful"){
+						//	$("#rstatus").text("Registration successful. Continue to login.");
+						self.location.href = '#login-page';
+						//	}
+						//else if( data == "Email already exists")
+						//	$("#rstatus").text("Email already exists, please use an unregistered email");
+						//else if(data == "Registration failed")
+						//	$("#rstatus").text("Registration error. Try again!");
+					}
+				});
+			} else{
+				alert("Input matching password!")
+				}
 		});
 		</script>
 		
