@@ -67,7 +67,7 @@
 
 	<div role="main" class="ui-content">
 		<p id="rstatus"></p>
-		<form id="Registrationform" action="processregistration.php" method="POST">
+		<form id="Registrationform">
 			<fieldset>
 				<!--legend>Personal information:</legend-->
 				 First name:<br>
@@ -82,6 +82,8 @@
 				 </select> <br>
 				 Date of Birth: <br>
 				 <input type="date" name="dob" id="dob" required="yes"><br>
+				 Phone number: <br>
+				 <input type="phone number" name="phonenumber" id="" required="no"><br>
 				 Email: <br>
 				 <input type="email" name="email" id="email" required="yes"><br>
 				 Password:<br>
@@ -286,7 +288,7 @@
 			var loginString ="email="+email+"&password="+password+"&login=";
 			$.ajax({
 				type: "POST",crossDomain: true, cache: false,
-				url: "http://127.0.0.1/cofferesbackend/Process.php",
+				url: "https://romanian-gasket.000webhostapp.com/Process.php",
 				data: loginString,
 				success: function(data){
 					if(data == "success") {
@@ -306,18 +308,22 @@
 	<!-- for registration page-->
 	<script>
 		$("#registerButton").click(function(){
+		alert("welkom")
 		var firstname = $.trim($('#firstname').val());
 		var lastname = $.trim($('#lastname').val());
 		var gender = $.trim($('#gender').val());
+		var dob = $.trim($('#gender').val());
+		var phonenumber = $.trim($('#phonenumber').val());
 		var email = $.trim($('#email').val());
 		var password = $.trim($('#passwd').val());
 		
 		$("#rstatus").text("Creating New Account...");
-		var dataString="&firstname="+firstname+"&lastname="+lastname+"&gender="+gender+"&email="+email+"&password="+password+"&register=";
-		$.ajax({c
+		//var dataString="&firstname=":firstname+"&lastname="+lastname+"&gender="+gender+"&email="+email+"&password="+password+"&register=";
+		$.ajax({
 			type: "POST",crossDomain: true, cache: false,
-			url: "http://127.0.0.1/cofferesbackend/Process.php",
-			data: dataString,
+			url: "https://romanian-gasket.000webhostapp.com/Process.php",
+			type: "POST",
+			data: {firstname:"firstname",lastname:"lastname",gender:"gender",dob:"dob",phonenumber:"phonenumber",email:"email",password:"password"},
 			success: function(data){
 				if(data == "success")
 					$("#rstatus").text("Registered success");
