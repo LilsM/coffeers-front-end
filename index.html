@@ -13,6 +13,32 @@
 		<link rel="stylesheet" type="text/css" href="stylesheet.css">
         <title>Coffeer App</title>
 		
+		<style type="text/css">
+        	#imageUpload
+			{
+			    display: none;
+			}
+
+			#profileImage
+			{
+			    cursor: pointer;
+			}
+        	#profile-container {
+    			width: 150px;
+    			height: 150px;
+    			overflow: hidden;
+    			-webkit-border-radius: 50%;
+    			-moz-border-radius: 50%;
+    			-ms-border-radius: 50%;
+    			-o-border-radius: 50%;
+    			border-radius: 50%;
+    		}
+    		#profile-container img {
+			    width: 150px;
+			    height: 150px;
+			}
+        </style>
+   
 		<script type="text/javascript">
 			document.addEventListener("deviceready",DeviceReady,false);
 			function DeviceReady(){
@@ -35,22 +61,22 @@
 			<div data-role="header" >
 				<a href="#Registration-page" data-icon="user" style="background-color:white;">Click to Register</a>
 				<a href="#profile-page" data-icon="user" style="background-color:white;">Your Profile</a>
-				<h1>Login Page</h1>
+				
 			</div><!-- /header -->
 
 			<div role="main" class="ui-content" >
 				<p id="status"></p>
-				<form  method="post" id="loginform">
+				<center><h1>Login Page</h1></center>
+				<form  method="POST" id="loginform">
 					Email:<br>
 					<input type="email" name="lmail" id="lmail" required="yes" >
 					Password:<br>
-					<input type="Password" name="password" id="password" required="yes"><br>
+					<input type="Password" name="lpassword" id="lpassword" required="yes"><br>
 					<button> <input type="hidden" name="loginButton" id="loginButton" style="background-color:white;"> submit</button>
 				</form>
 			</div><!-- /content -->
 
 			<div data-role="footer">
-		
 				<h4>&copy; Second Cup Coffee Company. Accra, Ghana, 2019</h4>
 			</div><!-- /footer -->
 		</div>
@@ -85,9 +111,9 @@
 				 <input type="email" name="email" id="email"><br>
 				 Password:<br>
 				 <input type="Password" name="password" id="password"><br>
-				 Confirm Password:<br>
-				 <input type="Password" name="cpassword" id="cpassword"><br>
-				 <button> <input  type="hidden" name="registerButton" id="registerButton" style="background-color:white;" > submit</button>
+				 <!-- Confirm Password:<br>
+				 <input type="Password" name="cpassword" id="cpassword"><br-->
+				 <button><input  type="hidden" name="registerButton" id="registerButton" style="background-color:white;" > submit</button>
 				</fieldset>
 			</form>
 		</div><!-- /content-->
@@ -101,26 +127,58 @@
 			
 			
 		<!-- profile page -->
-		<div data-role="page" id="profile-page" data-theme="">
-
-			<div data-role="header">
-				<a href="#Registration-page" data-icon="user">Click to Register</a>
-				<h1>Profile Page</h1>
-			</div><!-- /header -->
-
-			<div role="main" class="ui-content">
-				<img href="" alt="Profile Picture goes here.">
-				<p>Name: </p>
-				<p>Username: </p>
-				<p>Bio:</p>
-			</div><!-- /content -->
-
-			<div data-role="footer">
-				<h4>&copy; Second Cup Coffee Company. Accra, Ghana, 2019</h4>
-			</div><!-- /footer -->
+		<div data-role="page" id="profile-page" class="coffeerpage">
+		<div data-role="header"> 
+			<div id="profile-container">
+				<img id="profileImage" src="blank-profile.png" />
+				<br>
+			<br>
+			
+			</div>
+			<!-- <input id="imageUpload" type="file" name="profile_photo"placeholder="Photo" required="" capture> -->
+			<button id="fromCamera">Take a picture</button>
+			<button id="fromGallery">Select from Gallery</button>
+			
+			<img src="" id="takeprofilepic" style="width:100%;height:60px"> -->
 		</div>
 		
-		<!-- profile page -->
+		
+		<div data-role="content" role="main" class="ui-content">
+			<div id="editprofile">
+
+				<button type="submit" id="editbutton" value="edit profile"></button><br>
+				<a href="#" id="editclick">Edit profile</a>
+				<form id="changeform">
+					Enter new name:<br>
+					<input type="text" name="newname"><br>
+					Enter new password:<br>
+					<input type="password" name="newpassword" id="newpassword">
+					<br>
+					Profile:<br>
+					<input type="textarea" name="bio"><br>
+					<input type="submit" value="Save changes">
+				</form>
+				
+				
+			</div>
+			<div id="result"></div>
+			
+		</div>
+		<!-- /footer -->
+		<div data-role="footer" data-position="fixed">
+			<h4>&copy; Second Cup Coffee Company. Accra, Ghana, 2019</h4>
+		</div>
+	</div>
+		
+		<!-- menu page -->
+		<script>
+			$(function()
+			{
+			  $("#coffee").select2({
+				maximumSelectionLength: 2  
+			  });
+			});
+		</script>
 		<div data-role="page" id="menu-page" data-theme="">
 
 			<div data-role="header">
@@ -132,8 +190,8 @@
 				<form>
 				Coffee: <br>
 				 <select name="coffee" id="coffee" >
-					<option disabled selected value>--select--</option>
-				 	<option value="Cafe Latte">Cafe Latte GHC <P>14.00</P> <!--input type="number" step="1" value="1"--></input></option>
+					<option >--select--</option>
+				 	<option value="Cafe Latte">Cafe Latte GHC <P>14.00</P> <!--input type="number" step="1" value="1"--></option>
 				 	<option value="Cafe Mocha">Cafe Mocha GHC <P>15.00</P></option>
 				 	<option value="Caramel Macchiato">Caramel Macchiato GHC <P>14.00</P></option>
 					<option value="Cafe Americano">Cafe Americano GHC <P>16.00</P></option>
@@ -143,7 +201,7 @@
 				 </select> <br>
 				Cakes: 
 				 <select name="cake" id="cake">
-					<option disabled selected value>--select--</option>
+					<option >--select--</option>
 				 	<option value="Chocolate brownie">Chocolate brownie	GHC <P>18.00</P></option>
 				 	<option value="Double chop chic cookies">Double chop chic cookies GHC <P>17.00</P></option>
 				 	<option value="Chocolate chip cookies">Chocolate chip cookies GHC <P>18.00</P></option>
@@ -162,14 +220,14 @@
 				 </select> <br>
 				Salads: <br>
 				 <select name="salads" id="salads">
-					<option disabled selected value>--select--</option>
+					<option >--select--</option>
 				 	<option value="Greek salad">Greek salad	GHC <P>31.00</P></option>
 				 	<option value="Chef salad">Chef salad	GHC <P>35.00</P></option>
 				 	<option value="Chicken pasta salad">Chicken pasta salad	GHC <P>36.00</P></option>
 				 </select> <br>
 				Sandwiches: <br>
 				 <select name="sandwich" id="sandwich">
-					<option disabled selected value>--select--</option>
+					<option >--select--</option>
 				 	<option value="Egg mayo sandwich">Egg mayo sandwich	GHC <P>20.00</P></option>
 				 	<option value="Steak & cheese sandwich">Steak & cheese sandwich	GHC <P>33.00</P></option>
 				 	<option value="Spicy chicken wrap">Spicy chicken wrap	GHC <P>28.00</P></option>
@@ -179,7 +237,7 @@
 				 </select> <br> 
 				Parfaits: <br>
 				 <select name="parfait" id="parfait">
-					<option disabled selected value>--select--</option>
+					<option >--select--</option>
 				 	<option value="Plain yoghurt">Plain yoghurt	GHC <P>17.00</P></option>
 				 	<option value="Mixed berry fusion parfaits">Mixed berry fusion parfaits	GHC <P>22.00</P></option>
 				 	<option value="Honey granola parfait">Honey granola parfait	GHC <P>22.00</P></option>
@@ -191,7 +249,7 @@
 				 </select> <br> 
                 Smoothies: <br>
 				 <select name="smoothie" id="smoothie">
-					<option disabled selected value>--select--</option>
+					<option >--select--</option>
 				 	<option value="Clementine mango smoothie">Clementine mango smoothie	GHC <P>21.00</P></option>
 				 	<option value="Strawberry banana smoothie">Strawberry banana smoothie	GHC <P>21.00</P></option>
 				 	<option value="Mixed berry smoothie">Mixed berry smoothie	GHC <P>21.00</P></option>
@@ -202,7 +260,7 @@
 				 </select> <br>
 				Fruit Chillers: <br>
 				 <select name="chillers" id="chillers">
-					<option disabled selected value>--select--</option>
+					<option >--select--</option>
 				 	<option value="Italian soda">Italian soda	GHC <P>13.00</P></option>
 				 	<option value="Strawberry fruit chiller">Strawberry fruit chiller	GHC <P>19.00</P></option>
 				 	<option value="Mango fruit chiller">Mango fruit chiller	GHC <P>19.00</P></option>
@@ -285,11 +343,12 @@
 			$("#status").text("Authenticating...");
 			//var loginString ="email="+email+"&password="+password+"&login=";
 			$.ajax({
-				type: "POST",crossDomain: true, cache: false,
+				//type: "POST",crossDomain: true, cache: false,
+				type: "POST",
 				url: "https://romanian-gasket.000webhostapp.com/ProcessingFunctions.php",
 				data: {email:'email', password:'password'},
 				success: function(data){
-					if(data == "success") {
+					if(data) {
 						$("#status").text("Login Success..!");
 						localStorage.loginstatus = "true";
 						self.location.href = '#menu-page';
@@ -360,6 +419,185 @@
 				open("#reservetable-page")
 			});
 		</script>
+		
+		
+	<script>
+		
+			
+			$( "#profilepage" ).ready(function( event, ui ) {
+				// Put the results in a div
+				$.post( "http://localhost/mobile_web/test.php", function( data ) {
+				var content= data;
+				$( "#result" ).html( content );
+				});
+				
+				//take picture
+				document.addEventListener("deviceready", onDeviceReady, false);
+
+				function onDeviceReady() {
+					<!-- takePicture(); -->
+					<!-- getGallery(); -->
+					('#fromCamera').click(function(){
+						
+						takePicture();
+					});
+					$('#fromGallery').click(function(){
+						getGallery();
+					});
+					/*$("#profileImage").click(function(e) {
+					    $("#imageUpload").click();
+					   ;
+					});*/
+
+					/*function fasterPreview( uploader ) {
+					    if ( uploader.files && uploader.files[0] ){
+					          $('#profileImage').attr('src', 
+					             window.URL.createObjectURL(uploader.files[0]) );
+					    }
+					}*/
+
+					/*$("#imageUpload").change(function(){
+					    fasterPreview( this );
+					});*/
+					
+					
+				}
+				
+			
+				//set camera options
+				function setOptions(srcType) {
+					var options = {
+       				 // Some common settings are 20, 50, and 100
+       					quality: 50,
+       					destinationType: Camera.DestinationType.FILE_URI,
+        				// In this app, dynamically set the picture source, Camera or photo gallery
+        				sourceType: srcType,
+        				encodingType: Camera.EncodingType.JPEG,
+        				mediaType: Camera.MediaType.PICTURE,
+        				allowEdit: true,
+        				correctOrientation: true, 
+        				//Corrects Android orientation quirks\
+        				saveToPhotoAlbum:true
+        			}
+        			return options;
+        		}
+
+        		//Take a picture
+        		function takePicture(selection){
+        			var srcType = Camera.PictureSourceType.CAMERA;
+    				var options = setOptions(srcType);
+    				//return thumbnailsize
+    				if (selection == "camera-thmb") {
+        			options.targetHeight = 10;
+        			options.targetWidth = 10;
+   					 }
+
+   					console.log(navigator.camera);
+
+   					navigator.camera.getPicture(function onSuccess(imageURI) {
+					//render image to image tag
+					var image = document.getElementById('profileImage');
+					image.src = imageURI;
+					//store image
+					getFileEntry();
+					// func(imageURI);
+					},//get error
+					function onFail(message) {
+					alert('Failed because: ' + message);
+					}, options);	
+        			
+   				}
+
+        		//get image from gallery
+        		function getGallery(selection){
+        			var srcType = Camera.PictureSourceType.SAVEDPHOTOALBUM;
+    				var options = setOptions(srcType);
+    				popoverOptions: new CameraPopoverOptions(300, 300, 100, 100, Camera.PopoverArrowDirection.ARROW_ANY, 300, 600)
+   					// var func = createNewFileEntry;
+
+   					//return thumbnailsize
+   					if (selection == "picker-thmb") {
+        				options.targetHeight = 3;
+        				options.targetWidth = 3;
+   					 }
+
+   					console.log(navigator.camera);
+
+   					navigator.camera.getPicture(function onSuccess(imageURI) {
+						//render image to image tag
+						var image = document.getElementById('profileImage');
+						image.src = imageURI;
+						//store image in local storage
+						getFileEntry();
+						// func(imageURI);
+					},//get error
+					function onFail(message) {
+						alert('Failed because: ' + message);
+					}, options);
+
+
+        		}
+
+        		//getting file entry object and storing image
+        		function getFileEntry(imgUri) {
+        			window.resolveLocalFileSystemURL(imgUri, function success(fileEntry) {
+        				//access local storage
+        				var storage = window.localStorage;
+        				storage.setItem('profile picture', imgUri);
+
+
+        			// upload the FileEntry object.
+       				 // writeFile(fileEntry, imgUri);
+        			console.log("got file: " + fileEntry.fullPath);
+        			// displayFileData(fileEntry.nativeURL, "Native URL");
+
+    				}, function failedtoGetImage(message){
+    					alert('Failed to get image because:' + message);
+    				});
+    			}
+
+				
+				//hide form until edit profile button is clicked
+				$('#changeform').hide();
+				//hideedit profile button
+				$('#editbutton').hide();
+				//hide save changes option until edit profile is clicked
+				$('#savechanges').hide();
+				//hide form changes button
+				
+
+
+				$('#editbutton').submit(function(event){
+					$('#changeform').show();
+					event.preventDefault();
+				})
+
+				//trigger the edit button to allow editing
+				$( "#editclick" ).click(function() {
+  					$( "#editbutton" ).submit();
+  					$('#savechanges').show();
+  				});
+				//save form changes
+				$('#changeform').submit(function(event){
+					//get form values
+					var $form = $( this ),
+					newName = $form.find( "input[name='newname']" ).val(),
+					newpass = $form.find( "input[name='newpassword']" ).val(),
+					profileBio = $form.find( "input[name='bio']" ).val(),
+					url = $form.attr( "action" );
+					//sending data using post
+					var posting = $.post( url, { newname: newName, newpassword: newpass, bio: profileBio } );
+					event.preventDefault();
+				})
+				//trigger form submit button save changes
+				
+			} );
+
+			
+			
+		// });
+	</script>
+	
 		
 		<!--script type="text/javascript" src="cordova.js"></script-->
 	</body>
